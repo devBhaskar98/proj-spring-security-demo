@@ -2,7 +2,6 @@ package com.devProject.springsecuritydemo.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devProject.springsecuritydemo.entity.Employee;
@@ -16,7 +15,6 @@ public class EmployeeDAOJpaImpl implements EmployeeDAO{
 	private EntityManager entityManager;
 	
 
-	@Autowired
 	public EmployeeDAOJpaImpl(EntityManager theEntityManager) {
 		entityManager = theEntityManager;
 	}

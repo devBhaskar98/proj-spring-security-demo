@@ -2,10 +2,9 @@ package com.devProject.springsecuritydemo.rest;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devProject.springsecuritydemo.entity.Employee;
-import com.devProject.springsecuritydemo.entity.EmployeeErrorResponse;
 import com.devProject.springsecuritydemo.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeRestController {
+	
+	private static final Logger logInfo = LoggerFactory.getLogger(EmployeeRestController.class);
 	
 	private EmployeeService employeeService;
 
@@ -36,6 +36,7 @@ public class EmployeeRestController {
 	
 	@GetMapping("/employees/{employeeId}")
 	public Employee getEmployee(@PathVariable int employeeId) {
+		logInfo.info("get employee called with id " + employeeId);
 		Employee employee = employeeService.findById(employeeId);
 		
 		if(employee == null) {
@@ -49,6 +50,7 @@ public class EmployeeRestController {
 	public Employee addEmployee(@RequestBody Employee theEmployee) {
 		
 		Employee employeeDb = employeeService.save(theEmployee);
+		logInfo.debug("new employee craeted with id " + employeeDb.getId());
 		
 		return employeeDb;
 	}

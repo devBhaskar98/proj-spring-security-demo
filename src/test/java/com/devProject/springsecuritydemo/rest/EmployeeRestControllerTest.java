@@ -2,7 +2,6 @@ package com.devProject.springsecuritydemo.rest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
