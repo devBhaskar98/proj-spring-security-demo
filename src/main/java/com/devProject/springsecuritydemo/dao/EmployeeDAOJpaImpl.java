@@ -2,6 +2,9 @@ package com.devProject.springsecuritydemo.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.devProject.springsecuritydemo.entity.Employee;
@@ -30,6 +33,27 @@ public class EmployeeDAOJpaImpl implements EmployeeDAO{
 		
 		// return employee list
 		return employees;
+		
+	}
+	
+	@Override
+	public Page<Employee> findAllByPagination(Pageable pageable) {
+		 // Create the query for retrieving the paginated results
+        TypedQuery<Employee> query = entityManager.createQuery("from Employee", Employee.class);
+        
+        // Apply pagination
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+
+        // Get the results
+        List<Employee> employees = query.getResultList();
+
+        // Create the count query for the total number of records
+        TypedQuery<Long> countQuery = entityManager.createQuery("select count(e) from Employee e", Long.class);
+        Long total = countQuery.getSingleResult();
+
+        // Create and return the Page object
+        return new PageImpl(employees, pageable, total);
 		
 	}
 
